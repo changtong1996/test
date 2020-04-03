@@ -8,14 +8,13 @@ import (
 )
 
 // Scavenge is the Scavenge struct
-type Articles struct {
+type Article struct {
 	Article_id   string          `json:"article_id"`                     // id of the article
 	Uid          string          `json:"uid"`							 // id of the user
 	Tid          string          `json:"tid"`                            // id of the transaction
 	A_timestamp  string          `json:"a_timestamp"`                    // timestamp of the article 
 	A_title      string          `json:"a_title"`                        // title of the article 
 	A_text       string          `json:"a_text"`                          // text of the article
-	TextHash     string          `json:"textHash"`
 	Tag          string          `json:"tag"` 
 	Flag         int             `json:"flag"` 
 }  

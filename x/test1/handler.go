@@ -31,12 +31,12 @@ func handleMsgCreateArticle(ctx sdk.Context, k Keeper, msg MsgCreateArticle) (*s
 	var article = types.Article{
 		Creator:      msg.Creator,
 		Text:         msg.Text,
-		TextHash:     msg.TextHash,
 		A_title:      msg.A_title,
+		Tag:          msg.Tag,
 		Article_id:   msg.Article_id,
 		Tid:          msg.Tid,
  		Uid:          msg.Uid,
-		A_timestamp:  msg.a_timestamp,
+		A_timestamp:  msg.A_timestamp,
 		Reward:       msg.Reward,
 	}
 	_, err := k.GetArticle(ctx, article.Article_id)
@@ -53,10 +53,15 @@ func handleMsgCreateArticle(ctx sdk.Context, k Keeper, msg MsgCreateArticle) (*s
 		sdk.NewEvent(
 			sdk.EventTypeMessage,
 			sdk.NewAttribute(sdk.AttributeKeyModule, types.AttributeValueCategory),
-			sdk.NewAttribute(sdk.AttributeKeyAction, types.EventTypeCreateScavenge),
+			sdk.NewAttribute(sdk.AttributeKeyAction, types.EventTypeCreateArticle),
 			sdk.NewAttribute(sdk.AttributeKeySender, msg.Creator.String()),
-			sdk.NewAttribute(types.AttributeDescription, msg.Description),
-			sdk.NewAttribute(types.AttributeSolutionHash, msg.SolutionHash),
+			sdk.NewAttribute(types.AttributeText, msg.Text),
+			sdk.NewAttribute(types.AttributeA_title, msg.A_title),
+			sdk.NewAttribute(types.AttributeTag, msg.Tag),
+			sdk.NewAttribute(types.AttributeArticle_id, msg.Article_id),
+			sdk.NewAttribute(types.AttributeTid, msg.Tid),
+			sdk.NewAttribute(types.AttributeUid, msg.Uid),
+			sdk.NewAttribute(types.AttributeA_timestamp, msg.A_timestamp),
 			sdk.NewAttribute(types.AttributeReward, msg.Reward.String()),
 		),
 	)
@@ -90,10 +95,8 @@ func handleMsgCreateComment(ctx sdk.Context, k Keeper, msg MsgCreateComment) (*s
 		sdk.NewEvent(
 			sdk.EventTypeMessage,
 			sdk.NewAttribute(sdk.AttributeKeyModule, types.AttributeValueCategory),
-			sdk.NewAttribute(sdk.AttributeKeyAction, types.EventTypeCreateScavenge),
+			sdk.NewAttribute(sdk.AttributeKeyAction, types.EventTypeCreateComment),
 			sdk.NewAttribute(sdk.AttributeKeySender, msg.Creator.String()),
-			sdk.NewAttribute(types.AttributeDescription, msg.Description),
-			sdk.NewAttribute(types.AttributeSolutionHash, msg.SolutionHash),
 			sdk.NewAttribute(types.AttributeReward, msg.Reward.String()),
 		),
 	)
@@ -128,10 +131,8 @@ func handleMsgCreateReturnVisit(ctx sdk.Context, k Keeper, msg MsgCreateReturnVi
 		sdk.NewEvent(
 			sdk.EventTypeMessage,
 			sdk.NewAttribute(sdk.AttributeKeyModule, types.AttributeValueCategory),
-			sdk.NewAttribute(sdk.AttributeKeyAction, types.EventTypeCreateScavenge),
+			sdk.NewAttribute(sdk.AttributeKeyAction, types.EventTypeCreateReturnVisit),
 			sdk.NewAttribute(sdk.AttributeKeySender, msg.Creator.String()),
-			sdk.NewAttribute(types.AttributeDescription, msg.Description),
-			sdk.NewAttribute(types.AttributeSolutionHash, msg.SolutionHash),
 			sdk.NewAttribute(types.AttributeReward, msg.Reward.String()),
 		),
 	)
@@ -167,10 +168,8 @@ func handleMsgCreateAVote(ctx sdk.Context, k Keeper, msg MsgCreateAVote) (*sdk.R
 		sdk.NewEvent(
 			sdk.EventTypeMessage,
 			sdk.NewAttribute(sdk.AttributeKeyModule, types.AttributeValueCategory),
-			sdk.NewAttribute(sdk.AttributeKeyAction, types.EventTypeCreateScavenge),
+			sdk.NewAttribute(sdk.AttributeKeyAction, types.EventTypeCreateAVote),
 			sdk.NewAttribute(sdk.AttributeKeySender, msg.Creator.String()),
-			sdk.NewAttribute(types.AttributeDescription, msg.Description),
-			sdk.NewAttribute(types.AttributeSolutionHash, msg.SolutionHash),
 			sdk.NewAttribute(types.AttributeReward, msg.Reward.String()),
 		),
 	)
@@ -204,10 +203,8 @@ func handleMsgCreateCVote(ctx sdk.Context, k Keeper, msg MsgCreateCVote) (*sdk.R
 		sdk.NewEvent(
 			sdk.EventTypeMessage,
 			sdk.NewAttribute(sdk.AttributeKeyModule, types.AttributeValueCategory),
-			sdk.NewAttribute(sdk.AttributeKeyAction, types.EventTypeCreateScavenge),
+			sdk.NewAttribute(sdk.AttributeKeyAction, types.EventTypeCreateCVote),
 			sdk.NewAttribute(sdk.AttributeKeySender, msg.Creator.String()),
-			sdk.NewAttribute(types.AttributeDescription, msg.Description),
-			sdk.NewAttribute(types.AttributeSolutionHash, msg.SolutionHash),
 			sdk.NewAttribute(types.AttributeReward, msg.Reward.String()),
 		),
 	)

@@ -50,7 +50,7 @@ func GetCmdArticleName(queryRoute string, cdc *codec.Codec) *cobra.Command {
 				fmt.Printf("could not get  - %s \n", name)
 				return nil
 			}
-			var out types.Articles
+			var out types.Article
 			cdc.MustUnmarshalJSON(res, &out)
 			return cliCtx.PrintOutput(out)
 			},

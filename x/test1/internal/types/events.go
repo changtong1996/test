@@ -10,6 +10,22 @@ const (
 
 	// TODO: Some events may not have values for that reason you want to emit that something happened.
 	// AttributeValueDoubleSign = "double_sign"
+	EventTypeCreateArticle       = "CreateArticle"
+	EventTypeCreateComment       = "CreateComment"
+	EventTypeCreateReturnVisit   = "CreateReturnVisit"
+	EventTypeCreateAVote         = "CreateAVote"
+	EventTypeCreateCVote         = "CreateCVote"
 
+
+
+	AttributeText                = "text" 	
+	AttributeA_title             = "a_title"
+	AttributeTag                 = "tag"
+	AttributeArticle_id          = "article_id"
+	AttributeTid                 = "tid"
+	AttributeUid                 = "uid"
+	AttributeA_timestamp         = "a_timestamp"
+	AttributeReward              = "reward"
+	
 	AttributeValueCategory = ModuleName
 )

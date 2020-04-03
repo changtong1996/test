@@ -8,8 +8,8 @@ import (
 type MsgCreateArticle struct {
 	Creator      sdk.AccAddress `json:"creator"`           // address of the article creator
 	Text         string         `json:"text"`              // 
-	TextHash     string         `json:"textHash"`          // hash of the article
 	A_title      string         `json:"a_title"`
+	Tag          string         `json:"tag"`
 	Article_id   string         `json:"article_id"`
 	Tid			 string         `json:"tid"`
 	Uid          string         `json:"uid"`
@@ -18,17 +18,18 @@ type MsgCreateArticle struct {
 
 }
 
-func NewMsgCreateArticle(creator sdk.AccAddress, text, article_id string, reward sdk.Coins) MsgCreateArticle {
+func NewMsgCreateArticle(creator sdk.AccAddress, text string, a_title string, tag string, article_id string,
+ uid string, tid string, a_timestamp string, reward sdk.Coins) MsgCreateArticle {
 	return MsgCreateArticle{
-		Creator:     creator,
-		Text:        text,
-		TextHash:    textHash,
-		A_title:     a_title,
-		Article_id:  article_id,
-		Tid:         tid,
- 		Uid:         uid,
-		A_timestamp: a_timestamp,
-		Reward:      reward,
+		Creator:      creator,
+		Text:         text,
+		A_title:      a_title,
+		Tag:          tag,
+		Article_id:   article_id,
+		Tid:          tid,
+ 		Uid:          uid,
+		A_timestamp:  a_timestamp,
+		Reward:       reward,
 	}
 }
 
@@ -53,7 +54,7 @@ func (msg MsgCreateArticle) ValidateBasic() error {
 		return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "creator can't be empty")
 	}
 	if msg.article_id == "" {
-		return sdkerrors.Wrap(sdkerrors.ErrInvalidRequest, "solutionScavengerHash can't be empty")
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidRequest, "articleid can't be empty")
 	}
 	return nil
 }
@@ -71,17 +72,19 @@ type MsgCreateComment struct {
 	Uid          string          `json:"uid"`							 // id of the user
 	C_timestamp  string          `json:"c_timestamp"`                    // timestamp of the comment 
 	C_text       string          `json:"c_text"`                         // context of the comment
+	Reward       sdk.Coins       `json:"reward"`
 }
 
 func NewMsgCreateComment(creator sdk.AccAddress, comment_id string, article_id string, reward sdk.Coins) MsgCreateComment {
 	return MsgCreateComment{
-		Creator:     creator,
-		Comment_id:  comment_id,
-		Article_id:  article_id,
-		Tid:         tid,
- 		Uid:         uid,
-		C_timestamp: c_timestamp,
-		C_text:      c_text,
+		Creator:      creator,
+		Comment_id:   comment_id,
+		Article_id:   article_id,
+/*		Tid:          tid,
+ 		Uid:          uid,
+		C_timestamp:  c_timestamp,
+		C_text:       c_text,*/
+	    Reward:       reward,
 	}
 }
 
@@ -137,11 +140,11 @@ func NewMsgCreateReturnVisit(creator sdk.AccAddress, article_id string, return_v
 		Creator:             creator,
 		Return_visit_id:     return_visit_id,
 		Article_id:          article_id,
-		Tid:                 tid,
+/*		Tid:                 tid,
  		Uid:                 uid,
 		Rv_timestamp:        rv_timestamp,
 		Rv_text:             rv_text,
-		Flag:                flag,
+		Flag:                flag,*/
 		Reward:              reward,
 	}
 }
@@ -195,9 +198,9 @@ func NewMsgCreateAVote(creator sdk.AccAddress, article_id string, reward sdk.Coi
 	return MsgCreateAVote{
 		Creator:             creator,
 		Article_id:          article_id,
-		VoteUP:              voteUP,    
+/*		VoteUP:              voteUP,    
 	    VoteDOWN:            voteDOWN,
-	    Num:                 num,
+	    Num:                 num,*/
 		Reward:              reward,
 	}
 }
@@ -248,9 +251,9 @@ func NewMsgCreateCVote(creator sdk.AccAddress, comment_id string, reward sdk.Coi
 	return MsgCreateCVote{
 		Creator:             creator,
 		Comment_id:          comment_id,
-		VoteUP:              voteUP,    
+/*		VoteUP:              voteUP,    
 	    VoteDOWN:            voteDOWN,
-	    Num:                 num,
+	    Num:                 num,*/
 		Reward:              reward,
 	}
 }

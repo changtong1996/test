@@ -25,6 +25,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/x/slashing"
 	"github.com/cosmos/cosmos-sdk/x/staking"
 	"github.com/cosmos/cosmos-sdk/x/supply"
+	"github.com/changtong1996/test/x/test1"
 )
 
 const appName = "app"
@@ -101,7 +102,7 @@ type NewApp struct {
 	supplyKeeper   supply.Keeper
 	paramsKeeper   params.Keeper
 	// TODO: Add your module(s)
-	test1Keeper     test1.Keeper
+	test1Keeper    test1.Keeper
 
 	// Module Manager
 	mm *module.Manager
@@ -213,7 +214,7 @@ func NewInitApp(
 	app.test1Keeper = test1.NewKeeper{
 		app.bankKeeper,
 		app.cdc,
-		keys[test1.StoreKey]
+		keys[test1.StoreKey],
 	}
 
 	// NOTE: Any module instantiated in the module manager that is later modified

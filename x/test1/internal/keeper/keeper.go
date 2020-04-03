@@ -35,10 +35,10 @@ func (k Keeper) Logger(ctx sdk.Context) log.Logger {
 
 
 // Get returns the pubkey from the adddress-pubkey relation
-func (k Keeper) GetArticle(ctx sdk.Context, textHash string) (types.Article, error) {
+func (k Keeper) GetArticle(ctx sdk.Context, article_id string) (types.Article, error) {
 	store := ctx.KVStore(k.storeKey)
 	var article types.Article
-	byteKey := []byte(textHash)
+	byteKey := []byte(article_id)
 	err := k.cdc.UnmarshalBinaryLengthPrefixed(store.Get(byteKey), &article)
 	if err != nil {
 		return article, err
@@ -47,16 +47,16 @@ func (k Keeper) GetArticle(ctx sdk.Context, textHash string) (types.Article, err
 }
 
 func (k Keeper) SetArticle(ctx sdk.Context, article types.Article ) {
-	textHash := article.TextHash
+	article_id := article.Article_id
 	store := ctx.KVStore(k.storeKey)
 	bz := k.cdc.MustMarshalBinaryLengthPrefixed(article)
-	key := []byte(textHash)
+	key := []byte(article_id)
 	store.Set(key, bz)
 }
 
-func (k Keeper) DeleteArticle(ctx sdk.Context, textHash string) {
+func (k Keeper) DeleteArticle(ctx sdk.Context, article_id string) {
 	store := ctx.KVStore(k.storeKey)
-	store.Delete([]byte(textHash))
+	store.Delete([]byte(article_id))
 }
 
 

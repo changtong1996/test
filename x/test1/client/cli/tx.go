@@ -13,7 +13,7 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/x/auth"
 	"github.com/cosmos/cosmos-sdk/x/auth/client/utils"
-	"github.com/changtong/test/x/test1/internal/types"
+	"github.com/changtong1996/test/x/test1/internal/types"
 )
 
 // GetTxCmd returns the transaction commands for this module

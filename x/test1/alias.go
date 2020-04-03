@@ -1,8 +1,8 @@
 package test1
 
 import (
-	"github.com/changtong/test/x/test1/internal/keeper"
-	"github.com/changtong/test/x/test1/internal/types"
+	"github.com/changtong1996/test/x/test1/internal/keeper"
+	"github.com/changtong1996/test/x/test1/internal/types"
 )
 
 const (
@@ -35,6 +35,6 @@ type (
 	Keeper       = keeper.Keeper
 	GenesisState = types.GenesisState
 	Params       = types.Params
-
+	QueryArticleNames = types.QueryArticleNames
 	// TODO: Fill out module types
 )

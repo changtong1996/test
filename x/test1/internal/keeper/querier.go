@@ -9,7 +9,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
-	"github.com/changtong/test/x/test1/internal/types"
+	"github.com/changtong1996/test/x/test1/internal/types"
 )
 
 // NewQuerier creates a new querier for test1 clients.

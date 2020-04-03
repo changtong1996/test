@@ -1,5 +1,4 @@
-module github.com/changtong/test
-
+module github.com/changtong1996/test
 go 1.13
 
 require (

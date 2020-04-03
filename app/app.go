@@ -33,12 +33,12 @@ var (
 	// TODO: rename your cli
 
 	// DefaultCLIHome default home directories for the application CLI
-	DefaultCLIHome = os.ExpandEnv("$HOME/.acli")
+	DefaultCLIHome = os.ExpandEnv("$HOME/.test1cli")
 
 	// TODO: rename your daemon
 
 	// DefaultNodeHome sets the folder where the applcation data and configuration will be stored
-	DefaultNodeHome = os.ExpandEnv("$HOME/.aud")
+	DefaultNodeHome = os.ExpandEnv("$HOME/.test1d")
 
 	// ModuleBasics The module BasicManager is in charge of setting up basic,
 	// non-dependant module elements, such as codec registration
@@ -53,6 +53,7 @@ var (
 		slashing.AppModuleBasic{},
 		supply.AppModuleBasic{},
 		// TODO: Add your module(s) AppModuleBasic
+		test1.AppModuleBasic{},
 	)
 
 	// module account permissions
@@ -100,6 +101,7 @@ type NewApp struct {
 	supplyKeeper   supply.Keeper
 	paramsKeeper   params.Keeper
 	// TODO: Add your module(s)
+	test1Keeper     test1.Keeper
 
 	// Module Manager
 	mm *module.Manager
@@ -126,7 +128,7 @@ func NewInitApp(
 
 	// TODO: Add the keys that module requires
 	keys := sdk.NewKVStoreKeys(bam.MainStoreKey, auth.StoreKey, staking.StoreKey,
-		supply.StoreKey, distr.StoreKey, slashing.StoreKey, params.StoreKey)
+		supply.StoreKey, distr.StoreKey, slashing.StoreKey, params.StoreKey, test1.StoreKey)
 
 	tKeys := sdk.NewTransientStoreKeys(staking.TStoreKey, params.TStoreKey)
 
@@ -208,6 +210,12 @@ func NewInitApp(
 
 	// TODO: Add your module(s) keepers
 
+	app.test1Keeper = test1.NewKeeper{
+		app.bankKeeper,
+		app.cdc,
+		keys[test1.StoreKey]
+	}
+
 	// NOTE: Any module instantiated in the module manager that is later modified
 	// must be passed by reference here.
 	app.mm = module.NewManager(
@@ -219,7 +227,7 @@ func NewInitApp(
 		slashing.NewAppModule(app.slashingKeeper, app.accountKeeper, app.stakingKeeper),
 		// TODO: Add your module(s)
 		staking.NewAppModule(app.stakingKeeper, app.accountKeeper, app.supplyKeeper),
-		slashing.NewAppModule(app.slashingKeeper, app.accountKeeper, app.stakingKeeper),
+		test1.NewAppModule(app.test1Keeper, app.bankKeeper),
 
 	)
 	// During begin block slashing happens after distr.BeginBlocker so that
@@ -241,6 +249,7 @@ func NewInitApp(
 		// TODO: Add your module(s)
 		supply.ModuleName,
 		genutil.ModuleName,
+		test1.ModuleName,
 	)
 
 	// register all module routes and module queriers

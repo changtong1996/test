@@ -8,7 +8,7 @@ import (
 
 	"github.com/cosmos/cosmos-sdk/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"github.com/changtong/test/x/test1/internal/types"
+	"github.com/changtong1996/test/x/test1/internal/types"
 )
 
 // Keeper of the test1 store

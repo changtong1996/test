@@ -12,8 +12,10 @@ import (
 	"github.com/cosmos/cosmos-sdk/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/module"
-	"github.com/changtong/test/x/test1/client/cli"
-	"github.com/changtong/test/x/test1/client/rest"
+	"github.com/cosmos/cosmos-sdk/x/bank"
+	"github.com/changtong1996/test/x/test1/internal/types"
+	"github.com/changtong1996/test/x/test1/client/cli"
+	"github.com/changtong1996/test/x/test1/client/rest"
 )
 
 var (
@@ -75,14 +77,16 @@ type AppModule struct {
 
 	keeper        Keeper
 	// TODO: Add keepers that your application depends on
+	coinKeeper bank.Keeper
 }
 
 // NewAppModule creates a new AppModule object
-func NewAppModule(k Keeper, /*TODO: Add Keepers that your application depends on*/) AppModule {
+func NewAppModule(k Keeper,  bankKeeper bank.Keeper) AppModule {
 	return AppModule{
 		AppModuleBasic:      AppModuleBasic{},
 		keeper:              k,
 		// TODO: Add keepers that your application depends on
+		coinKeeper:          bankKeeper,
 	}
 }
 

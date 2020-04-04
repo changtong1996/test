@@ -3,7 +3,7 @@ package cli
 import (
 	"fmt"
 	"bufio"
-
+	"strconv"
 	"github.com/spf13/cobra"
 
 	"github.com/cosmos/cosmos-sdk/client"
@@ -32,6 +32,30 @@ func GetTxCmd(cdc *codec.Codec) *cobra.Command {
 	)...)
 
 	return test1TxCmd
+}
+
+
+func GetCmdNewVote(cdc *codec.Codec) *cobra.Command {
+	return &cobra.Command{
+		Use:   "add-vote [article_id][voteup]",
+		Short: "add a vote",
+		Args:  cobra.ExactArgs(2), // Does your request require arguments
+		RunE: func(cmd *cobra.Command, args []string) error {
+
+			cliCtx := context.NewCLIContext().WithCodec(cdc)
+			inBuf := bufio.NewReader(cmd.InOrStdin())
+			txBldr := auth.NewTxBuilderFromCLI(inBuf).WithTxEncoder(utils.GetTxEncoder(cdc))
+
+			voteUP, err := strconv.Atoi(args[1])
+			msg := types.NewMsgCreateAVote(cliCtx.GetFromAddress(), args[0], voteUP)
+			err = msg.ValidateBasic()
+			if err != nil {
+				return err
+			}
+
+			return utils.GenerateOrBroadcastMsgs(cliCtx, txBldr, []sdk.Msg{msg})
+		},
+	}
 }
 
 // Example:

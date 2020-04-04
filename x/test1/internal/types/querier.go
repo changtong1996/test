@@ -1,5 +1,5 @@
 package types
-
+/*import "strings"*/
 
 // Query endpoints supported by the test1 querier
 const (
@@ -7,15 +7,12 @@ const (
 	// Query<Action>    = "<action>"
 )
 
-/* 
-Below you will be able how to set your own queries:
-
 
 // QueryResList Queries Result Payload for a query
-type QueryResList []string
+/*type QueryVoteNum []string
 
 // implement fmt.Stringer
-func (n QueryResList) String() string {
+func (n QueryVoteNum) String() string {
 	return strings.Join(n[:], "\n")
 }
 

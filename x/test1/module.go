@@ -13,7 +13,7 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/module"
 	"github.com/cosmos/cosmos-sdk/x/bank"
-	"github.com/changtong1996/test/x/test1/internal/types"
+/*	"github.com/changtong1996/test/x/test1/internal/types"*/
 	"github.com/changtong1996/test/x/test1/client/cli"
 	"github.com/changtong1996/test/x/test1/client/rest"
 )

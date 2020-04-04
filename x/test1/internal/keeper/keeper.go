@@ -3,11 +3,12 @@ package keeper
 import (
 	"fmt"
 
-	"github.com/tendermint/tendermint/crypto"
+/*	"github.com/tendermint/tendermint/crypto"*/
 	"github.com/tendermint/tendermint/libs/log"
 
 	"github.com/cosmos/cosmos-sdk/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"
+	"github.com/cosmos/cosmos-sdk/x/bank"
 	"github.com/changtong1996/test/x/test1/internal/types"
 )
 
@@ -19,7 +20,7 @@ type Keeper struct {
 }
 
 // NewKeeper creates a test1 keeper
-func NewKeeper(coinKeeper bank.Keeper, cdc *codec.Codec, key sdk.StoreKey) Keeper {
+func NewKeeper(coinKeeper bank.Keeper, key sdk.StoreKey, cdc *codec.Codec) Keeper {
 	keeper := Keeper{
 		CoinKeeper: coinKeeper,
 		storeKey:   key,
@@ -164,7 +165,7 @@ func (k Keeper) GetCVote(ctx sdk.Context, comment_id string) (types.CommentVote,
 	return cVote, nil
 }
 
-func (k Keeper) SetCVote(ctx sdk.Context, aVote types.CommentVote ) {
+func (k Keeper) SetCVote(ctx sdk.Context, cVote types.CommentVote ) {
 	comment_id := cVote.Comment_id
 	store := ctx.KVStore(k.storeKey)
 	bz := k.cdc.MustMarshalBinaryLengthPrefixed(cVote)

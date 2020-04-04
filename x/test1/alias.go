@@ -32,9 +32,15 @@ var (
 )
 
 type (
-	Keeper       = keeper.Keeper
-	GenesisState = types.GenesisState
-	Params       = types.Params
-	QueryArticleNames = types.QueryArticleNames
+	Keeper              = keeper.Keeper
+	GenesisState        = types.GenesisState
+	Params              = types.Params
+/*	QueryArticleNames = types.QueryArticleNames*/
 	// TODO: Fill out module types
+/*	QueryVoteNum      = types.QueryVoteNum*/
+	MsgCreateArticle    = types.MsgCreateArticle
+	MsgCreateComment    = types.MsgCreateComment
+	MsgCreateReturnVisit= types.MsgCreateReturnVisit
+	MsgCreateAVote      = types.MsgCreateAVote
+	MsgCreateCVote      = types.MsgCreateCVote
 )

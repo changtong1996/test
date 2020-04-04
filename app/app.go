@@ -25,6 +25,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/x/slashing"
 	"github.com/cosmos/cosmos-sdk/x/staking"
 	"github.com/cosmos/cosmos-sdk/x/supply"
+
 	"github.com/changtong1996/test/x/test1"
 )
 
@@ -210,11 +211,10 @@ func NewInitApp(
 	)
 
 	// TODO: Add your module(s) keepers
-
 	app.test1Keeper = test1.NewKeeper{
 		app.bankKeeper,
-		app.cdc,
 		keys[test1.StoreKey],
+		app.cdc,
 	}
 
 	// NOTE: Any module instantiated in the module manager that is later modified

@@ -18,7 +18,7 @@ const (
 
 
 
-	AttributeText                = "text" 	
+	AttributeText                = "a_text" 	
 	AttributeA_title             = "a_title"
 	AttributeTag                 = "tag"
 	AttributeArticle_id          = "article_id"

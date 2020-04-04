@@ -3,8 +3,10 @@ package test1
 import (
 	"fmt"
 
+	"github.com/tendermint/tendermint/crypto"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
+	"github.com/changtong1996/test/x/test1/internal/types"
 )
 
 // NewHandler creates an sdk.Handler for all the test1 type messages
@@ -30,7 +32,7 @@ func NewHandler(k Keeper) sdk.Handler {
 func handleMsgCreateArticle(ctx sdk.Context, k Keeper, msg MsgCreateArticle) (*sdk.Result, error) {
 	var article = types.Article{
 		Creator:      msg.Creator,
-		Text:         msg.Text,
+		A_text:       msg.A_text,
 		A_title:      msg.A_title,
 		Tag:          msg.Tag,
 		Article_id:   msg.Article_id,
@@ -55,7 +57,7 @@ func handleMsgCreateArticle(ctx sdk.Context, k Keeper, msg MsgCreateArticle) (*s
 			sdk.NewAttribute(sdk.AttributeKeyModule, types.AttributeValueCategory),
 			sdk.NewAttribute(sdk.AttributeKeyAction, types.EventTypeCreateArticle),
 			sdk.NewAttribute(sdk.AttributeKeySender, msg.Creator.String()),
-			sdk.NewAttribute(types.AttributeText, msg.Text),
+			sdk.NewAttribute(types.AttributeText, msg.A_text),
 			sdk.NewAttribute(types.AttributeA_title, msg.A_title),
 			sdk.NewAttribute(types.AttributeTag, msg.Tag),
 			sdk.NewAttribute(types.AttributeArticle_id, msg.Article_id),
@@ -79,7 +81,7 @@ func handleMsgCreateComment(ctx sdk.Context, k Keeper, msg MsgCreateComment) (*s
  		Uid:         msg.Uid,
 		C_timestamp: msg.C_timestamp,
 		C_text:      msg.C_text,
-		Reward:       msg.Reward,
+		Reward:      msg.Reward,
 	}
 	_, err := k.GetComment(ctx, comment.Comment_id)
 	if err == nil {
@@ -152,16 +154,10 @@ func handleMsgCreateAVote(ctx sdk.Context, k Keeper, msg MsgCreateAVote) (*sdk.R
 		VoteUP:              msg.VoteUP,    
 	    VoteDOWN:            msg.VoteDOWN,
 	    Num:                 msg.Num,
-		Reward:              msg.Reward,
 	}
 	_, err := k.GetAVote(ctx, aVote.Article_id)
 	if err == nil {
 		return nil, sdkerrors.Wrap(err, "Rv with that id already exists")
-	}
-	moduleAcct := sdk.AccAddress(crypto.AddressHash([]byte(types.ModuleName)))
-	sdkError := k.CoinKeeper.SendCoins(ctx, aVote.Creator, moduleAcct, aVote.Reward)
-	if sdkError != nil {
-		return nil, sdkError
 	}
 	k.SetAVote(ctx, aVote)
 	ctx.EventManager().EmitEvent(
@@ -170,7 +166,6 @@ func handleMsgCreateAVote(ctx sdk.Context, k Keeper, msg MsgCreateAVote) (*sdk.R
 			sdk.NewAttribute(sdk.AttributeKeyModule, types.AttributeValueCategory),
 			sdk.NewAttribute(sdk.AttributeKeyAction, types.EventTypeCreateAVote),
 			sdk.NewAttribute(sdk.AttributeKeySender, msg.Creator.String()),
-			sdk.NewAttribute(types.AttributeReward, msg.Reward.String()),
 		),
 	)
 	return &sdk.Result{Events: ctx.EventManager().Events()}, nil
@@ -187,14 +182,13 @@ func handleMsgCreateCVote(ctx sdk.Context, k Keeper, msg MsgCreateCVote) (*sdk.R
 		VoteUP:              msg.VoteUP,    
 	    VoteDOWN:            msg.VoteDOWN,
 	    Num:                 msg.Num,
-		Reward:              msg.Reward,
 	}
 	_, err := k.GetCVote(ctx, cVote.Comment_id)
 	if err == nil {
 		return nil, sdkerrors.Wrap(err, "Rv with that id already exists")
 	}
 	moduleAcct := sdk.AccAddress(crypto.AddressHash([]byte(types.ModuleName)))
-	sdkError := k.CoinKeeper.SendCoins(ctx, aVote.Creator, moduleAcct, aVote.Reward)
+	sdkError := k.CoinKeeper.SendCoins(ctx, aVote.Creator, moduleAcct)
 	if sdkError != nil {
 		return nil, sdkError
 	}
@@ -205,7 +199,6 @@ func handleMsgCreateCVote(ctx sdk.Context, k Keeper, msg MsgCreateCVote) (*sdk.R
 			sdk.NewAttribute(sdk.AttributeKeyModule, types.AttributeValueCategory),
 			sdk.NewAttribute(sdk.AttributeKeyAction, types.EventTypeCreateCVote),
 			sdk.NewAttribute(sdk.AttributeKeySender, msg.Creator.String()),
-			sdk.NewAttribute(types.AttributeReward, msg.Reward.String()),
 		),
 	)
 	return &sdk.Result{Events: ctx.EventManager().Events()}, nil
